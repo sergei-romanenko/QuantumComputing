@@ -9,12 +9,17 @@ from functools import reduce
 from math import sqrt, pi, e, log
 import time
 
-from quintuple.computer import *
-from quintuple.program import *
+from quintuple.computer import (
+    Gate, State, StateNotSeparableException, Probability,
+    QuantumRegister, QuantumRegisterSet, QuantumRegisterCollection,
+    QuantumComputer, Program)
+from quintuple.program import (Programs)
 
-#########################################################################################
+
+#
 # All test code below
-#########################################################################################
+#
+
 class TestQuantumRegister(unittest.TestCase):
     def setUp(self):
         self.startTime = time.time()
@@ -86,7 +91,8 @@ class TestGetBloch(unittest.TestCase):
         self.assertTrue(np.allclose(State.get_bloch(Gate.Z * State.plus_state), np.array((-1, 0, 0))))
         self.assertTrue(np.allclose(State.get_bloch(Gate.Z * State.minus_state), np.array((1, 0, 0))))
 
-        # assert the norms are 1 for cardinal points (obviously) but also for a few other points at higher T depth on the Bloch Sphere
+        # assert the norms are 1 for cardinal points (obviously)
+        # but also for a few other points at higher T depth on the Bloch Sphere
         for state in [State.zero_state, State.one_state, State.plusi_state, State.minusi_state,
                       Gate.Z * State.plus_state, Gate.H * Gate.T * Gate.Z * State.plus_state,
                       Gate.H * Gate.T * Gate.H * Gate.T * Gate.H * Gate.T * Gate.Z * State.plus_state]:
@@ -140,7 +146,8 @@ class TestTGate(unittest.TestCase):
 
     def test_T(self):
         # This is useful to check some of the exercises on IBM's quantum experience.
-        # "Ground truth" answers from IBM's calculations which unfortunately are not reported to high precision.
+        # "Ground truth" answers from IBM's calculations which unfortunately
+        # are not reported to high precision.
         red_state = Gate.S * Gate.T * Gate.H * Gate.T * Gate.H * State.zero_state
         green_state = Gate.S * Gate.H * Gate.T * Gate.H * Gate.T * Gate.H * Gate.T * Gate.H * Gate.S * Gate.T * Gate.H * Gate.T * Gate.H * State.zero_state
         blue_state = Gate.H * Gate.S * Gate.T * Gate.H * Gate.T * Gate.H * Gate.S * Gate.T * Gate.H * Gate.T * Gate.H * Gate.T * Gate.H * State.zero_state

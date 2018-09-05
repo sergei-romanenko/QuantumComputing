@@ -1,13 +1,13 @@
 # Author: corbett@caltech.edu
 
-import numpy as np
-import unittest
-import re
-import random
 import itertools
+import random
+import re
 from functools import reduce
 from math import sqrt, pi, e, log
-import time
+
+import numpy as np
+
 
 #
 # Gates
@@ -15,7 +15,9 @@ import time
 
 class Gate(object):
     i_ = np.complex(0, 1)
-    ## One qubit gates
+
+    # One qubit gates
+
     # Hadamard gate
     H = 1. / sqrt(2) * np.matrix('1 1; 1 -1')
     # Pauli gates
@@ -542,7 +544,7 @@ class QuantumComputer(object):
                 # We need to assert that the full return can be comprised of concatenating states from beginning to end without extras
                 if not QuantumRegisterSet(qubit.get_entangled()).size() <= QuantumRegisterSet(
                         get_states_for).size() and QuantumRegisterSet(qubit.get_entangled()).intersection(
-                        QuantumRegisterSet(get_states_for)).size():
+                    QuantumRegisterSet(get_states_for)).size():
                     raise Exception(
                         "With this entanglement setup we can't fully separate out just the qubits of iterest. Try measuring more bits")
                 # We only care if we actually want to return something from this state Put eqo in order then
